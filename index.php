@@ -34,10 +34,10 @@ class wechatCallbackapiTest
             $msgType = trim( $postObj->MsgType);
             switch( $msgType ){
             case "text":
-                $resultStr = $this->handleText();
+                $resultStr = $this->handleText($postObj);
                 break;
             case "event":
-                $resultStr = $this->handleEvent();
+                $resultStr = $this->handleEvent($postObj);
                 break;
             default:
                 $resultStr = "No this message type:".$msgType;
