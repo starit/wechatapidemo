@@ -23,10 +23,12 @@ class wechatCallbackapiTest
         }
     }
 
+    //响应服务器发过来的消息
     public function responseMsg()
     {
         //get post data, May be due to the different environments
         //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        //获取到无损的POST数据，存放到$postStr。
         $postStr = file_get_contents('php://input');
 
         //extract post data
