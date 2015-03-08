@@ -82,7 +82,7 @@ class wechatCallbackapiTest
             {
                 $contentStr = $this->weather( $weatherCity );
             }
-            if($keyword == "你好" ){
+            else if($keyword == "你好" ){
                 $contentStr = "你好，感谢您的关注！";
             }
             else if( $keyword == "获取vpn" ){
@@ -91,7 +91,8 @@ class wechatCallbackapiTest
             else if( $keyword == "帮助"|| $keyword == "help" ){
                 $contentStr ="您可以试试回复:\n 1.你好\n 2.获取vpn\n 3.帮助";
             }
-            $contentStr = "收到!";
+            else
+                $contentStr = "收到!";
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
             echo $resultStr;
         }else{
