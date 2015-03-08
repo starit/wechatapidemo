@@ -8,6 +8,8 @@ define("TOKEN", "wxstar404com");
 $wechatObj = new wechatCallbackapiTest();
 //$wechatObj->valid();
 $wechatObj->responseMsg();
+
+
 class wechatCallbackapiTest
 {
     public function valid()
@@ -51,6 +53,7 @@ class wechatCallbackapiTest
     }
 
 
+    //处理文本信息
     public function handleText($postObj)
     {
         $fromUsername = $postObj->FromUserName;
@@ -76,6 +79,7 @@ class wechatCallbackapiTest
         }
     }
 
+    //处理事件
     public function handleEvent($postObj)
     {
         $contentStr="";
