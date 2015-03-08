@@ -115,7 +115,7 @@ class wechatCallbackapiTest
             <FuncFlag>0</FuncFlag>
             </xml>";
 
-        $resultStr = sprintf($textTpl, $postObj->FromUserName, $postObj->ToUserName, time(), $content, $flag);
+        $resultStr = sprintf($textTpl, $postObj->FromUserName, $postObj->ToUserName, time(), $contentStr, $flag);
         return $resultStr;
     }
 	private function checkSignature()
