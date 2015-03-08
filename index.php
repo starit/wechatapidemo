@@ -73,7 +73,24 @@ class wechatCallbackapiTest
         if(!empty( $keyword ))
         {
             $msgType = "text";
-            $contentStr = "Welcome to wechat world!";
+
+            //判断天气
+            $weatherWeather = mb_substr( $keyword, -2, 2, "UTF-8" );
+            $weatherCity =  mb_substr( $keyword, 0, -2, "UTF-8" );
+            
+            if( $weatherWeather =="天气" && (! empty($weatherCity ) ))
+            {
+                $contentStr = $this->weather( $weatherCity );
+            }
+            if($keyword == "你好" ){
+                $contentStr = "你好，感谢您的关注！";
+            }
+            else if( $keyword == "获取vpn" ){
+                $contentStr = "感谢您的关注，送您一个vpn帐号，服务器在美国，能用来干什么你懂的。\n服务器:www.star404.com\n连接方式pptp\n帐号:forwechat\n密码star404com";
+            }
+            else if( $keyword == "帮助"|| $keyword == "help" ){
+                $contentStr ="您可以试试回复:\n 1.你好\n 2.获取vpn\n 3.帮助";
+            $contentStr = "收到!";
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
             echo $resultStr;
         }else{
@@ -81,7 +98,27 @@ class wechatCallbackapiTest
         }
     }
 
-    //处理事件
+    /*天气查询API */
+    private function weather($cityName){
+       include("weather_cityId.php");
+       $c_name=$weather_cityId[$cityName];
+       if(!empty($c_name)){
+           $json=file_get_contents("http://m.weather.com.cn/data/".$c_name.".html");
+           $data=json_decode($json);
+           if( empty(weatherData['weatherinfo'] )
+           {
+               $contentStr = "【".$data->weatherinfo->city."天气预报】\n".$data->weatherinfo->date_y." ".$data->weatherinfo->fchh."时发布"."\n\n实时天气\n".$data->weatherinfo->weather1." ".$data->weatherinfo->temp1." ".$data->weatherinfo->wind1."\n\n温馨提示：".$data->weatherinfo->index_d."\n\n明天\n".$data->weatherinfo->weather2." ".$data->weatherinfo->temp2." ".$data->weatherinfo->wind2."\n\n后天\n".$data->weatherinfo->weather3." ".$data->weatherinfo->temp3." ".$data->weatherinfo->wind3; 
+           }
+           else 
+           {
+               $contentStr = "抱歉，没有".$cityName."的天气预报!";
+           }
+
+       } else {
+           return "";
+       }
+    }
+        //处理事件
     public function handleEvent($postObj)
     {
         $contentStr="";
