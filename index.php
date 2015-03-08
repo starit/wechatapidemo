@@ -117,8 +117,9 @@ class wechatCallbackapiTest
            }
 
        } else {
-           return "";
+           $contentStr="";
        }
+       return $contentStr;
     }
         //处理事件
     public function handleEvent($postObj)
