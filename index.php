@@ -74,13 +74,19 @@ class wechatCallbackapiTest
         {
             $msgType = "text";
 
-            //判断天气
+            //截取字符
             $weatherWeather = mb_substr( $keyword, -2, 2, "UTF-8" );
             $weatherCity =  mb_substr( $keyword, 0, -2, "UTF-8" );
-            
+            $tranFlag = mb_substr($keyword,0, 2, "UTF-8");
+            $tranContent = mb_substr( $keyword,2, -2,"UTF-8" );
+            //判断天气，若后两个字符为『天气』则进入
             if( $weatherWeather =="天气" && (! empty($weatherCity ) ))
             {
                 $contentStr = $this->weather( $weatherCity );
+            }
+            if( $tranFlag == "翻译" )
+            {
+                $contentStr = $this->translate( $tranContent );
             }
             else if($keyword == "你好" ){
                 $contentStr = "你好，感谢您的关注！";
@@ -121,7 +127,18 @@ class wechatCallbackapiTest
        }
        return $contentStr;
     }
-        //处理事件
+    //翻译功能，调用谷歌接口
+    private function translate( $tranContent )
+    {
+         include("google_api.php");
+         $g = new Google_API_translator(); 
+         $g->setText( $tranContent );   
+         $g->translate();  
+         $ret = $g->out;
+         return $ret;
+    }
+
+    //处理事件
     public function handleEvent($postObj)
     {
         $contentStr="";
@@ -132,7 +149,7 @@ class wechatCallbackapiTest
             break;
         //取消订阅时发送的文字
         case "unsubscribe":
-            $contentStr="听说您取消了对我的关注，希望您能发邮件到janyucheng@gmail.com，告诉我哪里做得不好，帮助我为大家提供真正有用的信息和服务！";
+            $contentStr="很遗憾您取消了对我的关注，希望您能发邮件到janyucheng@gmail.com，告诉我哪里做得不够好，帮助我为大家提供真正有用的信息和服务！";
             break;
         default:
             $contentStr="Unknow event ".$postObj->Event;
@@ -140,6 +157,7 @@ class wechatCallbackapiTest
         $resultStr = $this->responseText( $postObj, $contentStr );
         return $resultStr;
     }
+
     function responseText( $postObj, $contentStr, $flag=0)
     {
         $fromUsername = $postObj->FromUserName;
