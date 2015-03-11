@@ -107,7 +107,8 @@ class wechatCallbackapiTest
     }
 
     /*天气查询API */
-    private function weather($cityName){
+    private function weather($cityName)
+    {
        include("./weather_cityId.php");
        @$c_name=$weather_cityId[$cityName];
        if(!empty($c_name)){
@@ -130,12 +131,21 @@ class wechatCallbackapiTest
     //翻译功能，调用谷歌接口
     private function translate( $tranContent )
     {
+        /*
          include("google_api.php");
          $g = new Google_API_translator(); 
          $g->setText( $tranContent );   
          $g->translate();  
          $ret = $g->out;
          return $ret;
+         */
+        include "GoogleTranslate.php";
+        $tr = new GoogleTranslate();
+        $tr->setLangFrom("zh");
+        $tr->setLangTo("zh");
+        $tranReturn = $tr->translate($tranContent);
+        return $tranReturn;
+        
     }
 
     //处理事件
