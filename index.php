@@ -139,11 +139,11 @@ class wechatCallbackapiTest
          $ret = $g->out;
          return $ret;
          */
-        include "GoogleTranslate.php";
+        include("GoogleTranslate.php");
         $tr = new GoogleTranslate();
-        $tr->setLangFrom("zh");
+        $tr->setLangFrom("en");
         $tr->setLangTo("zh");
-        $tranReturn = $tr->translate($tranContent);
+        $tranReturn = $tranContent.":".$tr->translate($tranContent);
         return $tranReturn;
         
     }
