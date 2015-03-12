@@ -78,7 +78,7 @@ class wechatCallbackapiTest
             $weatherWeather = mb_substr( $keyword, -2, 2, "UTF-8" );
             $weatherCity =  mb_substr( $keyword, 0, -2, "UTF-8" );
             $tranFlag = mb_substr($keyword,0, 2, "UTF-8");
-            $tranContent = mb_substr( $keyword,2, -2,"UTF-8" );
+            $tranContent = mb_substr( $keyword,2, 0,"UTF-8" );
             //判断天气，若后两个字符为『天气』则进入
             if( $weatherWeather =="天气" && (! empty($weatherCity ) ))
             {
