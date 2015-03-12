@@ -95,7 +95,7 @@ class wechatCallbackapiTest
                 $contentStr = "感谢您的关注，送您一个vpn帐号，服务器在美国，能用来干什么你懂的。\n服务器:www.star404.com\n连接方式pptp\n帐号:forwechat\n密码star404com";
             }
             else if( $keyword == "帮助"|| $keyword == "help" ){
-                $contentStr ="您可以试试回复:\n 1.你好\n 2.获取vpn\n 3.帮助";
+                $contentStr ="您可以试试回复:\n 1.你好\n 2.获取vpn\n 3.帮助\n4.地名+天气，如『北京天气』，来查询天气\n5.翻译+英文，如『翻译Hello』";
             }
             else
                 $contentStr = "收到!";
