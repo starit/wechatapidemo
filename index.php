@@ -4,7 +4,7 @@
   */
 
 //define your token
-define("TOKEN", "wxstar404com");
+define("TOKEN", "");
 $wechatObj = new wechatCallbackapiTest();
 //$wechatObj->valid();
 $wechatObj->responseMsg();
